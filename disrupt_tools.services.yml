@@ -1,0 +1,12 @@
+services:
+  disrupt_tools.slug_manager:
+    class: Drupal\disrupt_tools\Service\SlugManager
+    arguments:
+      - @path.alias_manager
+      - @entity_type.manager
+
+  disrupt_tools.image_style_generator:
+    class: Drupal\disrupt_tools\Service\ImageStyleGenerator
+    arguments:
+      - @entity.manager
+      - @file_system
