@@ -35,7 +35,7 @@ class SlugManager {
   }
 
   /**
-   * Retreive term from slug of name alias.
+   * Retrieve term from slug of name alias.
    *
    * Example:
    * <code>
@@ -53,7 +53,7 @@ class SlugManager {
    */
   public function slug2Taxonomy($taxonomy_term_alias, $pattern = '/') {
     if (!empty($taxonomy_term_alias)) {
-      // Retreive term from slug alias.
+      // Retrieve term from slug alias.
       $taxonomy_term_url = $this->aliasManager->getPathByAlias($pattern . $taxonomy_term_alias);
       if (!empty($taxonomy_term_url)) {
         $taxonomy_term_tid = str_replace('/taxonomy/term/', '', $taxonomy_term_url);
@@ -65,7 +65,7 @@ class SlugManager {
   }
 
   /**
-   * Retreive slug from taxonomy alias url.
+   * Retrieve slug from taxonomy alias url.
    *
    * Example:
    * <code>

@@ -39,7 +39,7 @@ class ImageStyleGenerator {
    * Generate Image Style, with responsive format.
    *
    * @param FileFieldItemList $field
-   *   Field File Entity to retreive cover and generate it.
+   *   Field File Entity to Retrieve cover and generate it.
    * @param array $styles
    *   Styles to be generated.
    *
@@ -49,7 +49,7 @@ class ImageStyleGenerator {
   public function fromField(FileFieldItemList $field, array $styles) {
     $build = array();
 
-    // Retreive node.
+    // Retrieve node.
     $cover_fid = '';
 
     if (isset($field) && $field->entity) {
