@@ -16,14 +16,14 @@ class ImageStyleGenerator {
   /**
    * EntityTypeManagerInterface to load Files.
    *
-   * @var EntityTypeManagerInterface
+   * @var Drupal\Core\Entity\EntityTypeManagerInterface
    */
   private $entityFile;
 
   /**
    * Provides helpers to operate on files and stream wrappers.
    *
-   * @var FileSystemInterface
+   * @var Drupal\Core\File\FileSystemInterface
    */
   private $fso;
 
@@ -38,7 +38,7 @@ class ImageStyleGenerator {
   /**
    * Generate Image Style, with responsive format.
    *
-   * @param FileFieldItemList $field
+   * @param Drupal\file\Plugin\Field\FieldType\FileFieldItemList $field
    *   Field File Entity to Retrieve cover and generate it.
    * @param array $styles
    *   Styles to be generated.

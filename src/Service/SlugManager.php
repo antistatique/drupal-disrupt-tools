@@ -15,14 +15,14 @@ class SlugManager {
   /**
    * AliasManagerInterface Service.
    *
-   * @var AliasManagerInterface
+   * @var Drupal\Core\Path\AliasManagerInterface
    */
   private $aliasManager;
 
   /**
    * EntityTypeManagerInterface to load Taxonomy.
    *
-   * @var EntityTypeManagerInterface
+   * @var Drupal\Core\Entity\EntityTypeManagerInterface
    */
   private $entityTaxonomy;
 
@@ -44,12 +44,12 @@ class SlugManager {
    * </code>
    *
    * @param string $taxonomy_term_alias
-   *    Taxonomy Alias.
+   *   Taxonomy Alias.
    * @param string $pattern
-   *    Taxonomy pattern.
+   *   Taxonomy pattern.
    *
    * @return \Drupal\taxonomy\Entity\Term|null
-   *    Return the according Term or null if when not found.
+   *   Return the according Term or null if when not found.
    */
   public function slug2Taxonomy($taxonomy_term_alias, $pattern = '/') {
     if (!empty($taxonomy_term_alias)) {
@@ -74,12 +74,12 @@ class SlugManager {
    * </code>
    *
    * @param \Drupal\taxonomy\Entity\Term $term
-   *    Taxonomy Term.
+   *   Taxonomy Term.
    * @param string $pattern
-   *    Taxonomy pattern.
+   *   Taxonomy pattern.
    *
    * @return string|null
-   *    Return the according slug or null if when not found.
+   *   Return the according slug or null if when not found.
    */
   public function taxonomy2Slug(Term $term, $pattern = '/') {
     if (!empty($term)) {
