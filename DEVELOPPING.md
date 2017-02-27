@@ -23,14 +23,16 @@ Check Drupal coding standards:
 
   ```
   $ ./vendor/bin/phpcs --standard=Drupal --colors
-  --extensions=php,module,inc,install,test,profile,theme,css,info,md --ignore=*/vendor/* ./
+  --extensions=php,module,inc,install,test,profile,theme,css,info,md
+  --ignore=*/vendor/* ./
   ```
 
 Check Drupal best practices:
 
   ```
   $ ./vendor/bin/phpcs --standard=DrupalPractice --colors
-  --extensions=php,module,inc,install,test,profile,theme,css,info,md --ignore=*/vendor/* ./
+  --extensions=php,module,inc,install,test,profile,theme,css,info,md
+  --ignore=*/vendor/* ./
   ```
 
 ### Enforce code standards with git hooks
