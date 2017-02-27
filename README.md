@@ -1,6 +1,7 @@
 # DISRUPT TOOLS
 
-This suite is primarily a set of APIs and tools to improve the developer experience.
+This suite is primarily a set of APIs and tools to improve
+the developer experience.
 
 For the moment, it includes the following tools:
   - ImageStyle -- tools to make it easy for modules to generate Image Styles,
@@ -17,4 +18,5 @@ The Drupal 8 version of Disrupt Tools requires nothing ! Feel free to use it.
 
 ## Supporting organizations
 
-This project is sponsored by Antistatique. We are a Swiss Web Agency, Visit us at [www.antistatique.net](https://www.antistatique.net) or Contact us.
+This project is sponsored by Antistatique. We are a Swiss Web Agency,
+Visit us at [www.antistatique.net](https://www.antistatique.net) or Contact us.
