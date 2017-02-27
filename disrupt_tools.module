@@ -1,15 +1,22 @@
 <?php
 
 /**
+ * @file
+ * Legacy Drupal 7 code to implements hooks and includes.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
  * Implements hook_help().
  *
  * @inheritdoc
  */
-function disrupt_tools_help($route_name, \Drupal\Core\Routing\RouteMatchInterface $route_match) {
+function disrupt_tools_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     case 'help.page.disrupt_tools':
       $text = file_get_contents(dirname(__FILE__) . "/README.md");
-      if (! \Drupal::moduleHandler()->moduleExists('markdown')) {
+      if (!\Drupal::moduleHandler()->moduleExists('markdown')) {
         return '<pre>' . $text . '</pre>';
       }
       else {
@@ -22,11 +29,4 @@ function disrupt_tools_help($route_name, \Drupal\Core\Routing\RouteMatchInterfac
       }
   }
   return NULL;
-}
-
-/**
- * Implements hook_install().
- */
-function disrupt_tools_install() {
-  drupal_set_message(t("Disrupt Tools is installed and ready for action."));
 }
