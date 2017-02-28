@@ -2,19 +2,25 @@
 
 namespace Drupal\disrupt_tools\Service;
 
-use Drupal\image\Entity\ImageStyle;
 use Drupal\file\Plugin\Field\FieldType\FileFieldItemList;
-
-// Injections.
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 
 /**
  * ImageStyleGenerator.
+ *
+ * Service to make it easy to generate Image Styles.
  */
 class ImageStyleGenerator {
   /**
-   * EntityTypeManagerInterface to load Files.
+   * EntityTypeManagerInterface to load Image Styles.
+   *
+   * @var Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  private $entityImageStyle;
+
+  /**
+   * EntityTypeManagerInterface to load files.
    *
    * @var Drupal\Core\Entity\EntityTypeManagerInterface
    */
@@ -31,8 +37,9 @@ class ImageStyleGenerator {
    * Class constructor.
    */
   public function __construct(EntityTypeManagerInterface $entity, FileSystemInterface $fso) {
-    $this->entityFile = $entity->getStorage('file');
-    $this->fso        = $fso;
+    $this->entityImageStyle = $entity->getStorage('image_style');
+    $this->entityFile       = $entity->getStorage('file');
+    $this->fso              = $fso;
   }
 
   /**
@@ -112,7 +119,7 @@ class ImageStyleGenerator {
     }
 
     foreach ($styles as $media => $style) {
-      $img_style = ImageStyle::load($style);
+      $img_style = $this->entityImageStyle->load($style);
 
       if ($img_style) {
         $build[$media] = $img_style->buildUrl($image->getFileUri());
