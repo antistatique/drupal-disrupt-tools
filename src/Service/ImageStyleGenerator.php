@@ -51,10 +51,10 @@ class ImageStyleGenerator {
    *   Styles to be generated.
    *
    * @return array
-   *   Generated link of styles
+   *   Generated link of styles.
    */
   public function fromField(FileFieldItemList $field, array $styles) {
-    $build = array();
+    $build = [];
 
     // Retrieve node.
     $cover_fid = '';
@@ -79,10 +79,10 @@ class ImageStyleGenerator {
    *   Styles to be generated.
    *
    * @return array
-   *   Generated link of styles
+   *   Generated link of styles.
    */
   public function fromFile($fid, array $styles) {
-    $build = array();
+    $build = [];
 
     $image = $this->entityFile->load($fid);
 
@@ -96,8 +96,7 @@ class ImageStyleGenerator {
   /**
    * Generate Image Style URL, with responsive format.
    *
-   * The Image Style URL given will be processed (derivated)
-   * by Drupal.
+   * The Image Style URL given will be processed (derivated) by Drupal.
    *
    * @param int $fid
    *   File id to generated.
@@ -108,7 +107,7 @@ class ImageStyleGenerator {
    *   Generated url of styles
    */
   private function styles($fid, array $styles) {
-    $build = array();
+    $build = [];
 
     $image = $this->entityFile->load($fid);
 

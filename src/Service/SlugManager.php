@@ -3,13 +3,13 @@
 namespace Drupal\disrupt_tools\Service;
 
 use Drupal\taxonomy\Entity\Term;
-
-// Injections.
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Path\AliasManagerInterface;
 
 /**
  * SlugManager.
+ *
+ * Service to make it easy to generate and manage custom Slug.
  */
 class SlugManager {
   /**
