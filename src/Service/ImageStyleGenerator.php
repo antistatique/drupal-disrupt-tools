@@ -130,10 +130,10 @@ class ImageStyleGenerator {
    * Check file exist.
    *
    * @param string $path
-   *    Path to the file.
+   *   Path to the file.
    *
    * @return bool
-   *    Returns TRUE if the file exists; FALSE otherwise.
+   *   Returns TRUE if the file exists; FALSE otherwise.
    */
   protected function fileExist($path) {
     return file_exists($path);
