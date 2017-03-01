@@ -10,6 +10,12 @@ on your environment:
   * drush
   * Latest dev release of Drupal 8.x.
 
+## 🏆 Tests
+
+  ```bash
+    $ ../vendor/bin/phpunit --group disrupt_tools
+  ```
+
 ## 🚔 Check Drupal coding standards & Drupal best practices
 
 You need to run composer before using PHPCS. Then register the Drupal

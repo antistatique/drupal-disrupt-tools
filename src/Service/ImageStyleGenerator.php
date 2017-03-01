@@ -37,8 +37,8 @@ class ImageStyleGenerator {
    * Class constructor.
    */
   public function __construct(EntityTypeManagerInterface $entity, FileSystemInterface $fso) {
-    $this->entityImageStyle = $entity->getStorage('image_style');
     $this->entityFile       = $entity->getStorage('file');
+    $this->entityImageStyle = $entity->getStorage('image_style');
     $this->fso              = $fso;
   }
 
@@ -59,8 +59,8 @@ class ImageStyleGenerator {
     // Retrieve node.
     $cover_fid = '';
 
-    if (isset($field) && $field->entity) {
-      $cover_fid = $field->entity->id();
+    if (isset($field) && $field->getEntity()) {
+      $cover_fid = $field->getEntity()->id();
     }
 
     if ($cover_fid) {
@@ -106,26 +106,37 @@ class ImageStyleGenerator {
    * @return array
    *   Generated url of styles
    */
-  private function styles($fid, array $styles) {
+  protected function styles($fid, array $styles) {
     $build = [];
-
     $image = $this->entityFile->load($fid);
 
     // Check the image exist on the file system.
     $image_path = $this->fso->realpath($image->getFileUri());
-    if (!file_exists($image_path)) {
+    if (!$this->fileExist($image_path)) {
       return $build;
     }
 
     foreach ($styles as $media => $style) {
       $img_style = $this->entityImageStyle->load($style);
-
       if ($img_style) {
         $build[$media] = $img_style->buildUrl($image->getFileUri());
       }
     }
 
     return $build;
+  }
+
+  /**
+   * Check file exist.
+   *
+   * @param string $path
+   *    Path to the file.
+   *
+   * @return bool
+   *    Returns TRUE if the file exists; FALSE otherwise.
+   */
+  protected function fileExist($path) {
+    return file_exists($path);
   }
 
 }
