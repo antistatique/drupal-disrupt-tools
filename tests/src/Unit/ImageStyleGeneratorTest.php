@@ -49,7 +49,7 @@ class ImageStyleGeneratorTest extends UnitTestCase {
     // Mock file field item.
     foreach ($this->files as $id => $file) {
       $this->{'fileFieldProphet_' . $id} = $this->prophesize('\Drupal\file\Plugin\Field\FieldType\FileFieldItemList');
-      $this->{'fileFieldProphet_' . $id}->getEntity()->willReturn($this->{'fileProphet_' . $id}->reveal());
+      $this->{'fileFieldProphet_' . $id}->getValue()->willReturn([0 => ['target_id' => $id]]);
     }
 
     // Mock file storage.

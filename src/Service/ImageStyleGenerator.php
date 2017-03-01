@@ -59,8 +59,8 @@ class ImageStyleGenerator {
     // Retrieve node.
     $cover_fid = '';
 
-    if (isset($field) && $field->getEntity()) {
-      $cover_fid = $field->getEntity()->id();
+    if (isset($field) && isset($field->getValue()[0]) && isset($field->getValue()[0]['target_id'])) {
+      $cover_fid = $field->getValue()[0]['target_id'];
     }
 
     if ($cover_fid) {
@@ -109,6 +109,10 @@ class ImageStyleGenerator {
   protected function styles($fid, array $styles) {
     $build = [];
     $image = $this->entityFile->load($fid);
+
+    if (empty($image)) {
+      return $build;
+    }
 
     // Check the image exist on the file system.
     $image_path = $this->fso->realpath($image->getFileUri());
