@@ -35,7 +35,8 @@ $styles = $isg->fromField($node->field_image, ['thumb' => 'thumbnail']);
 var_dump($styles);
 
 // Generate and retrieve image style from File ID:
-$styles = $isg->fromFile($node->field_image->getEntity()->id(), ['thumb' => 'thumbnail']);
+$fid = $node->field_image->entity->id();
+$styles = $isg->fromFile($fid, ['thumb' => 'thumbnail']);
 var_dump($styles);
 ```
 
