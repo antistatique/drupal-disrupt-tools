@@ -3,6 +3,20 @@
   "description": "Provides a number of utility, service and helper APIs for Drupal developers and site builders.",
   "type": "drupal-module",
   "homepage": "https://www.drupal.org/sandbox/wengerk/2855304",
+  "authors": [
+    {
+      "name": "Antistatique",
+      "email": "info@antistaique.net",
+      "homepage": "https://www.antistatique.net",
+      "role": "Sponsor"
+    },
+    {
+      "name": "Kevin Wenger",
+      "email": "contact@kevin-wenger.ch",
+      "homepage": "https://www.drupal.org/u/wengerk",
+      "role": "Author & Maintainer"
+    }
+  ],
   "support": {
     "issues": "https://www.drupal.org/project/issues/2855304"
   },
