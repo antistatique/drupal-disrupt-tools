@@ -128,7 +128,7 @@ class TaxonomyTermTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Check all the siblings terms of Term(10) work properly.
    */
   public function testGetSiblings10Work() {
     $siblings = $this->taxonomyHelpers->getSiblings('10');
@@ -139,7 +139,7 @@ class TaxonomyTermTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Check all the siblings terms of Term(50) work properly.
    */
   public function testGetSiblings50Work() {
     $siblings = $this->taxonomyHelpers->getSiblings('50');
@@ -149,14 +149,14 @@ class TaxonomyTermTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Check siblings fail properly with non-existing term.
    */
   public function testGetSiblingsFaillWhenNull() {
     $this->assertEquals(NULL, $this->taxonomyHelpers->getSiblings(NULL));
   }
 
   /**
-   *
+   * Check the top parent term of Term(10) work properly.
    */
   public function testGetTopParent10Work() {
     $parent = $this->taxonomyHelpers->getTopParent('10');
@@ -164,7 +164,7 @@ class TaxonomyTermTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Check the top parent term of Term(50) work properly.
    */
   public function testGetTopParent50Work() {
     $parent = $this->taxonomyHelpers->getTopParent('50');
@@ -172,14 +172,14 @@ class TaxonomyTermTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Check getTopParent fail properly with non-existing term.
    */
   public function testGetTopParentFaillWhenNull() {
     $this->assertEquals(NULL, $this->taxonomyHelpers->getTopParent(NULL));
   }
 
   /**
-   *
+   * Check the depth of Term(10) work properly.
    */
   public function testgetDepth10Work() {
     $depth = $this->taxonomyHelpers->getDepth('10');
@@ -187,7 +187,7 @@ class TaxonomyTermTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Check the depth of Term(50) work properly.
    */
   public function testgetDepth50Work() {
     $depth = $this->taxonomyHelpers->getDepth('50');

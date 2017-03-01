@@ -83,7 +83,7 @@ class TaxonomyHelpers {
    *   Current parent.
    *
    * @return Drupal\taxonomy\Entity\Term
-   *    The parent Taxonomy term.
+   *   The parent Taxonomy term.
    */
   public function getTopParent($tid, EntityInterface $parent = NULL) {
     // Check it has parent.
