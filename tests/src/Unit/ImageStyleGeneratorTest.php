@@ -71,7 +71,7 @@ class ImageStyleGeneratorTest extends UnitTestCase {
     $entityManagerProphet->getStorage('image_style')->willReturn($imageStyleStorageProphet->reveal());
 
     // Image Style Generator.
-    $this->imageStyleGenerator = $this->getMockBuilder('\Drupal\disrupt_tools\Service\imageStyleGenerator')
+    $this->imageStyleGenerator = $this->getMockBuilder('\Drupal\disrupt_tools\Service\ImageStyleGenerator')
       ->setConstructorArgs([$entityManagerProphet->reveal(), $fsoProphet->reveal()])
       ->setMethods(['fileExist'])
       ->getMock();
