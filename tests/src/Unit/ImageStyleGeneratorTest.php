@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\disrupt_tools\tests\src\Unit;
+namespace Drupal\Tests\disrupt_tools\Unit;
 
 use Drupal\Tests\UnitTestCase;
 
