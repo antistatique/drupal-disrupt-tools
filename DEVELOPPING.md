@@ -1,6 +1,9 @@
 # Developing on Disrupt Tools
 
-* Issues should be filed at https://www.drupal.org/project/issues/2855304
+* Issues should be filed at
+https://www.drupal.org/project/issues/disrupt_tools
+* Pull requests can be made against
+https://github.com/antistatique/drupal-disrupt-tools/pulls
 
 ## 🔧 Prerequisites
 

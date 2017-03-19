@@ -2,7 +2,7 @@
   "name": "drupal/disrupt_tools",
   "description": "Provides a number of utility, service and helper APIs for Drupal developers and site builders.",
   "type": "drupal-module",
-  "homepage": "https://www.drupal.org/sandbox/wengerk/2855304",
+  "homepage": "https://www.drupal.org/project/disrupt_tools",
   "authors": [
     {
       "name": "Antistatique",
@@ -18,7 +18,7 @@
     }
   ],
   "support": {
-    "issues": "https://www.drupal.org/project/issues/2855304"
+    "issues": "https://www.drupal.org/project/issues/disrupt_tools"
   },
   "license": "GPL-2.0+",
   "require-dev": {
