@@ -13,7 +13,8 @@ on your environment:
 ## 🏆 Tests
 
   ```bash
-    $ ../vendor/bin/phpunit --group disrupt_tools
+  $ cd core
+  $ ../../vendor/bin/phpunit --group disrupt_tools
   ```
 
 ## 🚔 Check Drupal coding standards & Drupal best practices
@@ -38,6 +39,14 @@ Check Drupal best practices:
   ```
   $ ./vendor/bin/phpcs --standard=DrupalPractice --colors
   --extensions=php,module,inc,install,test,profile,theme,css,info,md
+  --ignore=*/vendor/* ./
+  ```
+
+Automatically fix coding standards
+
+  ```
+  $ ./vendor/bin/phpcbf --standard=Drupal --colors
+  --extensions=php,module,inc,install,test,profile,theme,css,info
   --ignore=*/vendor/* ./
   ```
 
