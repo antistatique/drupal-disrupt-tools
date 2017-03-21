@@ -154,7 +154,7 @@ class TaxonomyHelpers {
    *   Nested array of Drupal\taxonomy\Entity\Term.
    */
   public function buildTree(array $elements, $parent = 0) {
-    $branch = array();
+    $branch = [];
 
     foreach ($elements as $element) {
       if ($element->parents[0] == $parent) {
