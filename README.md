@@ -73,6 +73,12 @@ var_dump($parent);
 $depth = $sm->getDepth(1);
 var_dump($depth);
 
+// Finds all terms in a given vocabulary ID and filter them by conditions.
+$em = \Drupal::service('entity.manager');
+$this->taxo = $em->getStorage('taxonomy_term');
+$flat = $th->loadTreeBy('tags', 0, ['field' => 'value'], NULL);
+var_dump($flat);
+
 // Converting a flat array of Drupal\taxonomy\Entity\Term into a nested tree.
 $em = \Drupal::service('entity.manager');
 $this->taxo = $em->getStorage('taxonomy_term');

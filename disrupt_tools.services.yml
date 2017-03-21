@@ -16,3 +16,4 @@ services:
     arguments:
       - @entity.manager
       - @database
+      - @entity.query

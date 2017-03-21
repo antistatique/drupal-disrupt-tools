@@ -5,6 +5,7 @@ namespace Drupal\disrupt_tools\Service;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\Query\QueryFactory;
 
 /**
  * TaxonomyHelpers.
@@ -27,11 +28,19 @@ class TaxonomyHelpers {
   private $database;
 
   /**
+   * Entity_query to query Node's Code.
+   *
+   * @var \Drupal\Core\Entity\Query\QueryFactory
+   */
+  private $entityQuery;
+
+  /**
    * Class constructor.
    */
-  public function __construct(EntityTypeManagerInterface $entity, Connection $database) {
+  public function __construct(EntityTypeManagerInterface $entity, Connection $database, QueryFactory $query) {
     $this->entityTaxonomy = $entity->getStorage('taxonomy_term');
     $this->database       = $database;
+    $this->entityQuery    = $query;
   }
 
   /**
@@ -158,6 +167,43 @@ class TaxonomyHelpers {
     }
 
     return $branch;
+  }
+
+  /**
+   * Finds all terms in a given vocabulary ID and filter them by conditions.
+   *
+   * @param int $vid
+   *   Vocabulary ID to retrieve terms for.
+   * @param int $parent
+   *   The term ID under which to generate the tree.
+   *   If 0, generate the tree for the entire vocabulary.
+   * @param array $conditions
+   *   Array of conditions to apply.
+   * @param int $max_depth
+   *   The number of levels of the siblings tree to return.
+   *   Leave NULL to return all levels.
+   *
+   * @return object[]|\Drupal\taxonomy\TermInterface[]
+   *   An array of term objects that are the children of the vocabulary $vid.
+   */
+  public function loadTreeBy($vid, $parent, array $conditions, $max_depth = 1) {
+    $query = $this->entityQuery->get('taxonomy_term')
+      ->condition('vid', $vid);
+    foreach ($conditions as $field => $condition) {
+      $query->condition($field, $condition);
+    }
+
+    // Load final data.
+    $tids = $query->execute();
+
+    $flat_tree = $this->entityTaxonomy->loadTree($vid, $parent, $max_depth, TRUE);
+    foreach ($flat_tree as $key => $branch) {
+      if (!in_array($branch->tid->value, $tids)) {
+        unset($flat_tree[$key]);
+      }
+    }
+
+    return $flat_tree;
   }
 
 }
