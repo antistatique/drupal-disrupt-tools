@@ -148,7 +148,6 @@ class TaxonomyHelpers {
   private function getParentRecursive($tid, array &$parents = []) {
     // Check it has parent.
     if ($parent = $this->termStorage->loadParents($tid)) {
-      dump($parent);
       $parents_tid = array_keys($parent);
       $parent_tid = reset($parents_tid);
 
