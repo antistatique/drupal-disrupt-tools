@@ -101,13 +101,13 @@ class TaxonomyTermTest extends UnitTestCase {
     $entityManagerProphet = $this->prophesize('\Drupal\Core\Entity\EntityTypeManagerInterface');
     $entityManagerProphet->getStorage('taxonomy_term')->willReturn($this->termStorageProphet->reveal());
 
-    // Mock entity type manager.
-    $connectionProphet = $this->prophesize('\Drupal\Core\Database\Connection');
+    // Mock query factory.
+    $queryFactoryProphet = $this->prophesize('\Drupal\Core\Entity\Query\QueryFactory');
 
     // Taxonomy Term.
     $this->taxonomyHelpers = $this->getMockBuilder('\Drupal\disrupt_tools\Service\TaxonomyHelpers')
-      ->setConstructorArgs([$entityManagerProphet->reveal(), $connectionProphet->reveal()])
-      ->setMethods(['getDepth'])
+      ->setConstructorArgs([$entityManagerProphet->reveal(), $queryFactoryProphet->reveal()])
+      ->setMethods(['getDepth', 'getParents'])
       ->getMock();
 
     // Mock the method fileExist.
@@ -125,6 +125,20 @@ class TaxonomyTermTest extends UnitTestCase {
               ])
           );
 
+    // Mock the method fileExist.
+    $this->taxonomyHelpers
+      ->expects($this->any())
+      ->method('getParents')
+      ->will(
+              $this->returnValueMap([
+                  ['10', []],
+                  ['20', []],
+                  ['40', []],
+                  ['50', [$this->terms['40']]],
+                  ['60', [$this->terms['40']]],
+                  ['30', [$this->terms['60'], $this->terms['40']]],
+              ])
+          );
   }
 
   /**
@@ -181,7 +195,7 @@ class TaxonomyTermTest extends UnitTestCase {
   /**
    * Check the depth of Term(10) work properly.
    */
-  public function testgetDepth10Work() {
+  public function testGetDepth10Work() {
     $depth = $this->taxonomyHelpers->getDepth('10');
     $this->assertEquals(0, $depth);
   }
@@ -189,9 +203,32 @@ class TaxonomyTermTest extends UnitTestCase {
   /**
    * Check the depth of Term(50) work properly.
    */
-  public function testgetDepth50Work() {
+  public function testGetDepth50Work() {
     $depth = $this->taxonomyHelpers->getDepth('50');
     $this->assertEquals(1, $depth);
+  }
+
+  /**
+   * Check get parents fail properly with non-existing term.
+   */
+  public function testGetParentsFaillWhenNull() {
+    $this->assertEquals(NULL, $this->taxonomyHelpers->getParents(NULL));
+  }
+
+  /**
+   * Check get parents of Term(10) work properly.
+   */
+  public function testGetParents10Work() {
+    $parents = $this->taxonomyHelpers->getParents('10');
+    $this->assertEquals([], $parents);
+  }
+
+  /**
+   * Check get parents of Term(50) work properly.
+   */
+  public function testGetParents50Work() {
+    $parents = $this->taxonomyHelpers->getParents('50');
+    $this->assertEquals([$this->terms['40']], $parents);
   }
 
 }

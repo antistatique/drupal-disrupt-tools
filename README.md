@@ -10,7 +10,7 @@ For the moment, it includes the following tools:
 
 ## Disrupt Tools versions
 
-Disrupt Tools is only available for Drupal 8 !   
+Disrupt Tools is only available for Drupal 8 !
 The module is ready to be used in Drupal 8, there are no known issues.
 
 ## Dependencies
@@ -72,6 +72,10 @@ var_dump($parent);
 // Retrieve the depth of a given term id into his vocabulary.
 $depth = $sm->getDepth(1);
 var_dump($depth);
+
+// Retrieve the all parents of a given term id into his vocabulary.
+$parents = $sm->getParents(1);
+var_dump($parents);
 
 // Finds all terms in a given vocabulary ID and filter them by conditions.
 $em = \Drupal::service('entity.manager');

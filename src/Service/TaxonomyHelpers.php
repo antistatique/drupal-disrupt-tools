@@ -4,7 +4,6 @@ namespace Drupal\disrupt_tools\Service;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\Query\QueryFactory;
 
 /**
@@ -14,33 +13,25 @@ use Drupal\Core\Entity\Query\QueryFactory;
  */
 class TaxonomyHelpers {
   /**
-   * EntityTypeManagerInterface to load Term(s).
+   * The term Storage.
    *
-   * @var Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\taxonomy\TermStorageInterface
    */
-  private $entityTaxonomy;
-
-  /**
-   * Provides a Drupal-specific extension of the PDO database.
-   *
-   * @var Drupal\Core\Database\Connection
-   */
-  private $database;
+  private $termStorage;
 
   /**
    * Entity_query to query Node's Code.
    *
    * @var \Drupal\Core\Entity\Query\QueryFactory
    */
-  private $entityQuery;
+  private $queryFactory;
 
   /**
    * Class constructor.
    */
-  public function __construct(EntityTypeManagerInterface $entity, Connection $database, QueryFactory $query) {
-    $this->entityTaxonomy = $entity->getStorage('taxonomy_term');
-    $this->database       = $database;
-    $this->entityQuery    = $query;
+  public function __construct(EntityTypeManagerInterface $entity, QueryFactory $query_factory) {
+    $this->termStorage  = $entity->getStorage('taxonomy_term');
+    $this->queryFactory = $query_factory;
   }
 
   /**
@@ -57,7 +48,7 @@ class TaxonomyHelpers {
    *   of the taxonomy term $tid.
    */
   public function getSiblings($tid, $max_depth = 1) {
-    $term = $this->entityTaxonomy->load($tid);
+    $term = $this->termStorage->load($tid);
 
     if (!$term) {
       return NULL;
@@ -75,7 +66,7 @@ class TaxonomyHelpers {
       }
 
       // Load the flat tree.
-      $flat_tree = $this->entityTaxonomy->loadTree($term->getVocabularyId(), $load_from, $max_depth, TRUE);
+      $flat_tree = $this->termStorage->loadTree($term->getVocabularyId(), $load_from, $max_depth, TRUE);
 
       return $flat_tree;
     }
@@ -96,7 +87,7 @@ class TaxonomyHelpers {
    */
   public function getTopParent($tid, EntityInterface $parent = NULL) {
     // Check it has parent.
-    if ($parent = $this->entityTaxonomy->loadParents($tid)) {
+    if ($parent = $this->termStorage->loadParents($tid)) {
       $parents_tid = array_keys($parent);
       $parent_tid = reset($parents_tid);
       $parent = reset($parent);
@@ -107,7 +98,7 @@ class TaxonomyHelpers {
       }
     }
     else {
-      $parent = $this->entityTaxonomy->load($tid);
+      $parent = $this->termStorage->load($tid);
     }
 
     return $parent;
@@ -123,21 +114,51 @@ class TaxonomyHelpers {
    *   Depth of the given term id.
    */
   public function getDepth($tid) {
-    // Retrieve the terms.
-    $query = $this->database->select('taxonomy_term_hierarchy', 't');
-    $results = $query->fields('t')
-      ->condition('t.tid', $tid)
-      ->range(0, 1)
-      ->execute();
+    $parents = [];
+    $this->getParentRecursive($tid, $parents);
+    return count($parents);
+  }
 
-    // Retrieve the depth.
-    if (!empty($results)) {
-      foreach ($results as $entry) {
-        return $entry->parent;
+  /**
+   * Get all parent term of given taxonomy term.
+   *
+   * @param int $tid
+   *   Given tid to retrieve all parent.
+   *
+   * @return array
+   *   The parent Taxonomy term.
+   */
+  public function getParents($tid) {
+    $parents = [];
+    $this->getParentRecursive($tid, $parents);
+    return $parents;
+  }
+
+  /**
+   * Get the tree parents term of given taxonomy term by recursivity.
+   *
+   * @param int $tid
+   *   Given tid to retrieve top parent.
+   * @param array $parents
+   *   The tree of parents, incremented by each iteration of the recusrive loop.
+   *
+   * @return Drupal\taxonomy\Entity\Term
+   *   The parent Taxonomy term.
+   */
+  private function getParentRecursive($tid, array &$parents = []) {
+    // Check it has parent.
+    if ($parent = $this->termStorage->loadParents($tid)) {
+      dump($parent);
+      $parents_tid = array_keys($parent);
+      $parent_tid = reset($parents_tid);
+
+      // Check if it's a top parent, otherwise load until reach top.
+      if ($parent_tid != 0) {
+        $parents[] = $this->getParentRecursive($parent_tid, $parents);
       }
     }
 
-    return NULL;
+    return $this->termStorage->load($tid);
   }
 
   /**
@@ -187,7 +208,7 @@ class TaxonomyHelpers {
    *   An array of term objects that are the children of the vocabulary $vid.
    */
   public function loadTreeBy($vid, $parent, array $conditions, $max_depth = 1) {
-    $query = $this->entityQuery->get('taxonomy_term')
+    $query = $this->queryFactory->get('taxonomy_term')
       ->condition('vid', $vid);
     foreach ($conditions as $field => $condition) {
       $query->condition($field, $condition);
@@ -196,7 +217,7 @@ class TaxonomyHelpers {
     // Load final data.
     $tids = $query->execute();
 
-    $flat_tree = $this->entityTaxonomy->loadTree($vid, $parent, $max_depth, TRUE);
+    $flat_tree = $this->termStorage->loadTree($vid, $parent, $max_depth, TRUE);
     foreach ($flat_tree as $key => $branch) {
       if (!in_array($branch->tid->value, $tids)) {
         unset($flat_tree[$key]);
