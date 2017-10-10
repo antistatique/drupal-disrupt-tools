@@ -30,7 +30,7 @@ class TaxonomyHelpers {
    * Class constructor.
    */
   public function __construct(EntityTypeManagerInterface $entity, QueryFactory $query_factory) {
-    $this->termStorage  = $entity->getStorage('taxonomy_term');
+    $this->termStorage = $entity->getStorage('taxonomy_term');
     $this->queryFactory = $query_factory;
   }
 
