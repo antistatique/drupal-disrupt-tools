@@ -10,7 +10,7 @@ https://github.com/antistatique/drupal-disrupt-tools/pulls
 Drupal repo
 
   ```
-  git remote add drupal https://wengerk@git.drupal.org:project/disrupt_tools.git
+  git remote add drupal git@git.drupal.org:project/disrupt_tools.git
   ```
 
 Github repo
